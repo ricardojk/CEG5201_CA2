@@ -1,0 +1,14 @@
+# Python / environment
+__pycache__/
+.venv/
+
+# Regenerated locally by generate_data.py (about 110 MB)
+data/
+
+# Smoke-test results and submission builds
+results_quick/
+dist/
+
+# OS files
+.DS_Store
+Thumbs.db

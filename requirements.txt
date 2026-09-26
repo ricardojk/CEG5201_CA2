@@ -1,0 +1,6 @@
+# Python 3.12, 3.13 or 3.14 (64-bit) on Windows or macOS.
+# Install into a virtual environment with:  pip install -r requirements.txt
+numpy==2.5.3        # matrix storage, data generation, reference product in verify.py
+pandas==3.0.6       # report tables (analyze.py)
+matplotlib==3.11.2  # report figures (analyze.py)
+psutil==7.2.2       # physical core count and RAM for the platform description
