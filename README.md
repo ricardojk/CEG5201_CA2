@@ -42,8 +42,6 @@ Open a terminal in the folder that contains this file, then:
       py -m venv .venv
       .venv\Scripts\Activate.ps1
       pip install -r requirements.txt
-  (If PowerShell refuses to run Activate.ps1, run once:
-      Set-ExecutionPolicy -Scope CurrentUser RemoteSigned )
 
 After activation the prompt starts with "(.venv)". Activate it again in every new
 terminal (the second line of the commands above). "python" below means the Python of
