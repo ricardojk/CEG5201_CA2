@@ -7,7 +7,7 @@ import os
 from pathlib import Path
 
 # ---------------------------------------------------------------------------
-# BLAS / OpenMP threads  (Advisory 4 of the CA2 statement)
+# BLAS / OpenMP threads
 # ---------------------------------------------------------------------------
 # Must run before NumPy is imported anywhere. Worker processes inherit these
 # variables, so no worker can oversubscribe the CPU with hidden BLAS threads.
@@ -16,16 +16,16 @@ for _name in ("OMP_NUM_THREADS", "MKL_NUM_THREADS", "OPENBLAS_NUM_THREADS",
     os.environ[_name] = "1"
 
 # ---------------------------------------------------------------------------
-# Team  (fill in once and commit)
+# Team  (TODO: fill in once and commit)
 # ---------------------------------------------------------------------------
-GROUP_ID = 0
+GROUP_ID = 4
 
 MEMBERS = [
-    # (Member ID, full name, matriculation number)
-    (1, "Member One", "A0000000A"),
-    (2, "Member Two", "A0000000B"),
-    (3, "Member Three", "A0000000C"),
-    (4, "Member Four", "A0000000D"),
+    # (Member ID, full name, matriculation number)   -> algorithm n
+    (0, "ZHOU JUNMIN", "A0000000A"),                  # 1 Strassen
+    (1, "RICARDO JACK LIWONGAN", "A0000000B"),        # 2 Coppersmith-Winograd
+    (2, "ZHANG FANGYU", "A0353200Y"),                 # 3 Cannon
+    (3, "DIVYALAKSHMI BALASUBRAMANIAM", "A0000000D"), # 4 Fox
 ]
 
 # Table II: algorithm number n -> module in algorithms/ and display name.

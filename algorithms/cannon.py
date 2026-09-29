@@ -1,6 +1,6 @@
 """[B-3] / [C-3]  Cannon's algorithm  (n = 3 in Table II).
 
-Owner: <your name>
+Owner: ZHANG FANGYU (Member ID 2)
 
 Reference: L. E. Cannon, "A Cellular Computer to Implement the Kalman Filter
 Algorithm," PhD thesis, Montana State University, 1969.
