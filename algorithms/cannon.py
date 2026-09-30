@@ -31,12 +31,31 @@ Implementation notes
   example is correct.)
 * Sequential version: the skew and the shifts are carried out literally, by rotating
   the grids of block references (no data is copied).
-* Multiprocessing version: every grid position (i, j) becomes one pool task, a
-  "virtual processor". The main process sends it, in stage order, the q block pairs
-  that the skew and the shifts would bring to it; the task runs its q multiply-add
-  stages and returns C[i][j]. The q^2 tasks are independent, so they need no barrier
-  between stages, and the pool hands them out one at a time (chunksize=1) to keep
-  all p workers busy.
+
+Bottleneck of the sequential version (python profile_seq.py --algo cannon)
+-----------------------------------------------------------------------------
+The q^2 block multiply-adds of the q stages (_multiply_add) take 99.5 % of the time
+at M = 512 and 99.8 % at M = 1024; the dot products inside them alone take 92-96 %.
+Skew, shifts, NumPy -> list conversion and joining are O(M^2) and together < 0.5 %.
+Within one stage the q^2 block products are independent, and the q products of one
+grid position only add into its own C block, so this is exactly the work to spread
+over processes.
+
+Multiprocessing version
+-----------------------
+* Every grid position (i, j) becomes one pool task, a "virtual processor". The main
+  process sends it, in stage order, the q block pairs that the skew and the shifts
+  would bring to it; the task runs its q multiply-add stages and returns C[i][j]. The
+  q^2 tasks are independent, so no barrier is needed between stages.
+* Measured overheads of this scheme are small: building tasks, pickling the blocks
+  and joining C cost < 1 % of the run time and mostly overlap with the computation.
+  The loss that remained was load imbalance: with q = 4 there are 16 equal tasks, so
+  5 or 6 workers finish in uneven rounds and sit idle 10-16 % of the time. Hence
+  q = CANNON_GRID = 8 (64 tasks, handed out one at a time with chunksize=1), which
+  lets faster workers pick up more tasks.
+* Small matrices would be cut into tiny tasks whose dispatch costs more than their
+  arithmetic, so blocks are kept at least CANNON_MIN_BLOCK wide (see _grid_size).
+  The sequential version uses the same grid, so both run the same algorithm.
 """
 from itertools import chain
 from operator import mul
@@ -49,6 +68,11 @@ import config
 # ---------------------------------------------------------------------------
 # Block helpers
 # ---------------------------------------------------------------------------
+def _grid_size(n):
+    """Block grid q for an n x n matrix: CANNON_GRID, but blocks at least CANNON_MIN_BLOCK wide."""
+    return max(1, min(config.CANNON_GRID, n // config.CANNON_MIN_BLOCK))
+
+
 def _edges(n, q):
     """Boundaries of the q block rows (= block columns) of an n x n matrix."""
     return [n * t // q for t in range(q + 1)]
@@ -85,7 +109,7 @@ def _join(grid):
 def multiply_seq(A, B):
     """[B-3] Sequential Cannon: skew once, then q stages of multiply-add and shift."""
     A, B = np.asarray(A), np.asarray(B)
-    q = config.CANNON_GRID
+    q = _grid_size(len(A))
     edges = _edges(len(A), q)
 
     # Initial alignment: position (i, j) receives A[i][(i+j)%q] and B[(i+j)%q][j].
@@ -124,7 +148,7 @@ def _grid_position(a_blocks, b_blocks):
 def multiply_mp(A, B, pool, p):
     """[C-3] Cannon with its q x q grid positions run as independent tasks on `pool`."""
     A, B = np.asarray(A), np.asarray(B)
-    q = config.CANNON_GRID
+    q = _grid_size(len(A))
     edges = _edges(len(A), q)
 
     # One task per grid position, with its block pairs listed in stage order.

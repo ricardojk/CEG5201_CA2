@@ -79,6 +79,12 @@ this activated environment.
 Optional smoke test: add --quick to run_benchmark.py and analyze.py. It uses only G0
 and G1 with pairs up to 256 x 256 and writes to results_quick/ instead of results/.
 
+Optional bottleneck analysis ([C-n.1]):
+     python profile_seq.py --algo cannon --size 1024
+     Profiles one sequential multiplication with cProfile, prints the functions with
+     the largest share of the run time and saves the table to
+     results/<algorithm>/profile/seq_<size>.txt.
+
 
 4. OUTPUT FILES
 ---------------
@@ -114,7 +120,8 @@ has to be changed to reproduce the results.
   PROCESS_COUNTS           1 .. min(6, CPU cores), computed automatically
   START_METHOD             "spawn" (the only start method available on Windows)
   TIME_POOL_CREATION       False: worker-pool creation is outside the timed region
-  STRASSEN_LEAF_SIZE, CW_LEAF_SIZE, CANNON_GRID, FOX_GRID   algorithm parameters
+  STRASSEN_LEAF_SIZE, CW_LEAF_SIZE, CANNON_GRID, CANNON_MIN_BLOCK, FOX_GRID
+                           algorithm parameters
   QUICK_*, VERIFY_MAX_SIZE, FIGURE_*                         smoke test, check, figures
 
 config.py also sets OMP_NUM_THREADS, MKL_NUM_THREADS, OPENBLAS_NUM_THREADS,
@@ -140,6 +147,7 @@ environment variable has to be set by hand.
   show_setup.py            prints assignment, machine and protocol
   generate_data.py         [A] creates the input matrices
   verify.py                correctness check against NumPy
+  profile_seq.py           cProfile of a sequential implementation (bottleneck)
   run_benchmark.py         [B] and [C] timing runs
   analyze.py               [D] and [E] tables and figures
   make_submission.py       builds the submission zip

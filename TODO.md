@@ -23,6 +23,7 @@ config.py              <- ALL shared settings (the only settings file)
 show_setup.py          assignment + machine + protocol
 generate_data.py       [A]  data/G0.npz .. G9.npz
 verify.py              correctness check against NumPy
+profile_seq.py         [C-n.1] cProfile of your multiply_seq: where the time goes
 run_benchmark.py       [B] [C]  timing runs -> results/<algo>/raw/*.json
 analyze.py             [D] [E]  tables (CSV) + figures (PNG)
 make_submission.py     builds the Canvas zip with the required names
@@ -76,6 +77,14 @@ Rules (from the CA2 statement, plus what the harness needs):
 
 If you adapt code from anywhere, cite it in your file and in your [F-n] page.
 
+**Finding your bottleneck ([C-n.1]).** The statement asks you to identify the
+bottleneck of your sequential version before parallelising it. Run
+`python profile_seq.py --algo <yours> --size 512` (and `--size 1024`): it lists the
+functions with the largest share of the run time and saves the table to
+`results/<algo>/profile/` for the report. Parallelise the part that dominates, then
+check that the overheads you add (task dispatch, data transfer, uneven task sizes)
+stay small.
+
 ## 5. Day-to-day workflow
 
 ```
@@ -115,7 +124,7 @@ re-run, e.g. `--mode mp --procs 5 6`.
 | D-n.1 (i), (ii) | `results/<algo>/figures/D-n.1_speedup_vs_p.png`, `D-n.1_speedup_vs_k.png`, table `D-n.1.csv` |
 | D-n.2 | `results/<algo>/tables/D-n.2.csv`, figure `D-n.2_speedup_vs_p.png` |
 | [E] comparison | `results/comparison/E_*.png`, `E_summary.csv` |
-| Bottleneck discussion | `C-n_pool_startup.csv` (process start-up cost per p) |
+| Bottleneck discussion | `results/<algo>/profile/seq_<size>.txt` (from `profile_seq.py`), `C-n_pool_startup.csv` (process start-up cost per p) |
 
 ## 8. Appendix A errata (checked numerically)
 
