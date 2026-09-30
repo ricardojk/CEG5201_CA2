@@ -1,5 +1,9 @@
-# Python 3.12, 3.13 or 3.14 (64-bit) on Windows or macOS.
-# Install into a virtual environment with:  pip install -r requirements.txt
+# Python 3.14.7 (64-bit) on Windows or macOS - every member uses exactly this version,
+# because the interpreter version changes the measured times.
+#   python.org: https://www.python.org/downloads/release/python-3147/
+#   conda:      conda create -n ceg5201 python=3.14.7
+# pip cannot install Python itself; check with:  python --version
+# Install into that environment with:  pip install -r requirements.txt
 numpy==2.5.3        # matrix storage, data generation, reference product in verify.py
 pandas==3.0.6       # report tables (analyze.py)
 matplotlib==3.11.2  # report figures (analyze.py)

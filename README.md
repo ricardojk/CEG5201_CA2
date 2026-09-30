@@ -12,7 +12,9 @@ tables and figures used in the report.
 1. REQUIREMENTS
 ---------------
 - Windows 10/11 or macOS (Intel or Apple Silicon), 64-bit.
-- Python 3.12, 3.13 or 3.14: https://www.python.org/downloads/
+- Python 3.14.7 (64-bit), the version all results were measured with:
+  https://www.python.org/downloads/release/python-3147/
+  (or with conda: conda create -n ceg5201 python=3.14.7)
 - Python packages, installed in step 2 (exact versions are pinned in requirements.txt):
       numpy 2.5.3        https://pypi.org/project/numpy/
       pandas 3.0.6       https://pypi.org/project/pandas/

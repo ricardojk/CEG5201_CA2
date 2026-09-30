@@ -9,9 +9,10 @@ also the readme we submit). This file covers how we work on the code together.
 
 ## 1. First steps (everyone)
 
-1. Install **Python 3.14** (3.12 and 3.13 also work, but we should all use the same
-   version), then follow readme.txt section 2 to create `.venv` and run
-   `pip install -r requirements.txt`.
+1. Install exactly **Python 3.14.7** (see requirements.txt; the interpreter version
+   changes the measured times, e.g. a run on 3.13 was clearly slower per operation),
+   then follow README.md section 2 to create the environment and run
+   `pip install -r requirements.txt`. Check with `python --version`.
 2. `python show_setup.py` shows which algorithm is yours.
 3. `python generate_data.py` prints a **data fingerprint**. Post it in the group chat:
    everyone's must match (same seed + same NumPy version = identical G0..G9).
