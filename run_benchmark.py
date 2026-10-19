@@ -7,7 +7,7 @@ Usage:
     python run_benchmark.py --algo strassen --mode seq       # sequential only
     python run_benchmark.py --algo fox --mode mp --procs 5 6 # re-run selected p only
     python run_benchmark.py --algo all                       # final run, every algorithm
-    python run_benchmark.py --algo cannon --quick            # smoke test -> results_quick/
+    python run_benchmark.py --algo cannon --quick            # 3-group run -> results_quick/
 """
 import config  # first import: pins BLAS threads before NumPy loads
 

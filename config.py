@@ -22,10 +22,10 @@ GROUP_ID = 4
 
 MEMBERS = [
     # (Member ID, full name, matriculation number)   -> algorithm n
-    (0, "ZHOU JUNMIN", "A0000000A"),                  # 1 Strassen
+    (0, "ZHOU JUNMIN", "A0257966H"),                  # 1 Strassen
     (1, "RICARDO JACK LIWONGAN", "A0000000B"),        # 2 Coppersmith-Winograd
     (2, "ZHANG FANGYU", "A0353200Y"),                 # 3 Cannon
-    (3, "DIVYALAKSHMI BALASUBRAMANIAM", "A0000000D"), # 4 Fox
+    (3, "DIVYALAKSHMI BALASUBRAMANIAM", "A0241265L"), # 4 Fox
 ]
 
 # Table II: algorithm number n -> module in algorithms/ and display name.
@@ -76,8 +76,8 @@ FOX_GRID = 4                    # q: split each matrix into q x q blocks
 # ---------------------------------------------------------------------------
 # Development shortcuts
 # ---------------------------------------------------------------------------
-QUICK_NUM_GROUPS = 2            # --quick runs G0..G1 only ...
-QUICK_MAX_SIZE = 256            # ... with pairs up to 256 x 256
+QUICK_NUM_GROUPS = 3            # --quick: G0..G2 only (allowed by the revised statement) ...
+QUICK_MAX_SIZE = 2048           # ... with all eight pair sizes
 VERIFY_MAX_SIZE = 256           # verify.py checks the G0 pairs up to this size
 
 # ---------------------------------------------------------------------------

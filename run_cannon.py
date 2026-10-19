@@ -9,7 +9,7 @@ On macOS the computer is kept awake (caffeinate) until this script ends.
 
 Usage:
     python run_cannon.py            # full test
-    python run_cannon.py --quick    # smoke test: G0-G1, sizes up to 256 -> results_quick/
+    python run_cannon.py --quick    # 3-group run: G0-G2, all sizes -> results_quick/
 """
 import config  # first import: pins BLAS threads before NumPy loads
 
@@ -31,7 +31,7 @@ def step(title, *args):
 
 def main():
     parser = argparse.ArgumentParser(description="Full test of Cannon's algorithm.")
-    parser.add_argument("--quick", action="store_true", help="small smoke test instead")
+    parser.add_argument("--quick", action="store_true", help="3 groups (G0-G2) instead of all")
     args = parser.parse_args()
     quick = ["--quick"] if args.quick else []
 
