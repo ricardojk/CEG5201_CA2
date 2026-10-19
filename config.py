@@ -69,6 +69,7 @@ TIME_POOL_CREATION = False
 # ---------------------------------------------------------------------------
 STRASSEN_LEAF_SIZE = 64         # below this size, switch to the schoolbook product
 CW_LEAF_SIZE = 64               # same, for Coppersmith-Winograd
+CW_MP_DEPTH = 2                 # levels of recursion done by the main process: 7^d pool tasks
 CANNON_GRID = 8                 # q: split each matrix into (at most) q x q blocks ...
 CANNON_MIN_BLOCK = 32           # ... keeping blocks at least this wide (small matrices)
 FOX_GRID = 4                    # q: split each matrix into q x q blocks
