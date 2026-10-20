@@ -23,7 +23,7 @@ GROUP_ID = 4
 MEMBERS = [
     # (Member ID, full name, matriculation number)   -> algorithm n
     (0, "ZHOU JUNMIN", "A0257966H"),                  # 1 Strassen
-    (1, "RICARDO JACK LIWONGAN", "A0000000B"),        # 2 Coppersmith-Winograd
+    (1, "RICARDO JACK LIWONGAN", "A0353688L"),        # 2 Coppersmith-Winograd
     (2, "ZHANG FANGYU", "A0353200Y"),                 # 3 Cannon
     (3, "DIVYALAKSHMI BALASUBRAMANIAM", "A0241265L"), # 4 Fox
 ]
