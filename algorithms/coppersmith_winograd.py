@@ -21,6 +21,24 @@ and seven more additions give Z (U2 and U3 are reused, hence 15 additions in tot
     Z11 = M1 + M2   Z12 = U4 + M3   Z21 = U3 - M4   Z22 = U3 + M5      
 Blocks of size <= CW_LEAF_SIZE are multiplied with the own i-j-k triple loop.
 
+Implementation notes
+--------------------
+* All arithmetic is pure Python on lists of Python ints. NumPy is only used to store the input
+  which is converted once with .tolist() inside the timed functions. Looping over NumPy elements
+  one by one is about 4x slower than over lists.
+* Base case: i-j-k triple loop. Y is transposed once per leaf so the k loop walks a
+  row of X and a column of Y side by side.
+* CW_LEAF_SIZE = 64 was chosen by measurement. Below that, the 15 additions of a level costs
+  more than the one multiplication this algorithm saves.
+
+Bottleneck of the sequential version
+------------------------------------
+The i-j-k lef products take around 89.6% of the time at M = 512 and around 88%
+at M = 1024. The S/T/U block additions take about 6-7%. The 7 products of one level
+do not depend on each other, they only need the S/T sums before them and only the U/Z
+additions after them use their result. So the products are the work to spread over
+processes while additions of the top levels stay in the main process.
+
 Multiprocessing version
 -----------------------
 Pool workers cannot create their own pools, so the recursion tree is flattened:
